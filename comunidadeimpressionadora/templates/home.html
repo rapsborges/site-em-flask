@@ -8,10 +8,12 @@
         {% for post in posts %}
             <div class="row border mt-4 p-3 cssposts">
                 <div class="col col-2">
-                    <div class="image pe-2"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> </div>
+                    <div class="image pe-2"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> </div><br>
                     <strong>{{ post.autor.username }}</strong><br>
                     <div class="row">
-                        {% if post.autor.cursos %}
+                        {% if 'Não Informado' in post.autor.cursos or post.autor.cursos == '' %}
+                            <button type="button" class="btn btn-success mt-2" disabled>Nenhum Curso Informado</button>
+                        {% elif post.autor.cursos %}
                             {% for curso in post.autor.cursos.split(';') %}
                                 <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
                             {% endfor %}
