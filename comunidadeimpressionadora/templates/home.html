@@ -2,8 +2,27 @@
 
 {% block body %}
 
-    <div class="container">
-        <h1>Página inicial</h1>
-        <p> Paragrafo </p>
+    <div class="container mt-3">
+        <h1>Posts</h1>
+        <hr>
+        {% for post in posts %}
+            <div class="row border mt-4 p-3 cssposts">
+                <div class="col col-2">
+                    <div class="image pe-2"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> </div>
+                    <strong>{{ post.autor.username }}</strong><br>
+                    <div class="row">
+                        {% if post.autor.cursos %}
+                            {% for curso in post.autor.cursos.split(';') %}
+                                <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col col-10">
+                    <a style="text-decoration: none" href="{{ url_for('exibir_post', post_id=post.id) }}"><h3>{{ post.titulo }}</h3></a>
+                    <p>{{ post.corpo }}</p>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}

@@ -2,7 +2,35 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container mt-3">
         <h1>Página de contato</h1>
+    </div>
+
+     <div class="container mt-2">
+        <div class="p-5">
+            <div class="d-flex align-items-center">
+                <div class="image pe-2">
+                    <img src="{{ foto }}" class="rounded" width="250">
+                </div>
+                <div class="col col-12">
+                    <h4 class="mb-0 mt-0">{{ nome }}</h4> <a href="mailto:{{ email }}">{{ email }}</a><br>
+                    <a class="btn btn-primary" style="background-color: #55acee;" href="https://www.linkedin.com/in/raphael-do-nascimento-borges-81177980/" role="button" target="_blank">
+                        <i class="fab fa-linkedin me-2"></i>Linkedin</a>
+                    <a class="btn btn-primary" style="background-color: #55acee;" href="https://www.instagram.com/rapha_nb/" role="button" target="_blank">
+                        <i class="fab fa-instagram me-2"></i>Instagram</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col col-4" style="text-align: center">
+            <strong>Cursos</strong><br>
+            {% if cursos %}
+                {% for curso in cursos %}
+                    <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

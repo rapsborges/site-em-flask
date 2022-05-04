@@ -10,12 +10,18 @@ from PIL import Image
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    posts = Post.query.order_by(Post.id.desc())
+    return render_template('home.html', posts=posts)
 
 
 @app.route('/contato')
 def contato():
-    return render_template('contato.html')
+    foto = url_for('static', filename='fotos_perfil/Sem Título-2f2b50f7faeb61896.jpg')
+    nome = str('Raphael N Borges')
+    email = str('raps_rnb@hotmail.com')
+    cursos = ['Python Impressionador', 'Git e GitHub: Controle e Compartilhe Seu Código']
+    sociais = [ 'Linkedin', 'Instagram' ]
+    return render_template('contato.html', foto=foto, nome=nome, email=email, cursos=cursos, sociais=sociais)
 
 
 @app.route('/usuarios')
@@ -50,7 +56,7 @@ def login():
 
 
         flash('Conta criada com sucesso para o email: {}'.format(form_criarconta.email.data), 'alert-success')
-        return redirect(url_for('home'))
+        return redirect(url_for('login'))
     return render_template('login.html', form_login=form_login, form_criarconta=form_criarconta)
 
 
@@ -78,7 +84,7 @@ def criar_post():
         database.session.add(post)
         database.session.commit()
         flash('Post Criado com Sucesso', 'alert-success')
-        return redirect(url_for('post'))
+        return redirect(url_for('home'))
     return render_template('criarpost.html', form=form)
 
 
@@ -127,13 +133,7 @@ def editar_perfil():
     return render_template('editarperfil.html', foto_perfil=foto_perfil, form=form)
 
 
-@app.route('/post')
-def post():
-    posts = Post.query.order_by(Post.id.desc())
-    return render_template('post.html', posts=posts)
-
-
-@app.route('/post/<post_id>', methods=['GET', 'POST'])
+@app.route('/<post_id>', methods=['GET', 'POST'])
 def exibir_post(post_id):
     post = Post.query.get(post_id)
     if current_user == post.autor:
@@ -146,13 +146,13 @@ def exibir_post(post_id):
             post.corpo = form.corpo.data
             database.session.commit()
             flash('Post atualizado com sucesso', 'alert-success')
-            return redirect(url_for('post'))
+            return redirect(url_for('home'))
     else:
         form = None
     return render_template('editarpost.html', post=post, form=form)
 
 
-@app.route('/post/<post_id>/excluir', methods=['GET', 'POST'])
+@app.route('/<post_id>/excluir', methods=['GET', 'POST'])
 @login_required
 def excluir_post(post_id):
     post = Post.query.get(post_id)
@@ -160,6 +160,6 @@ def excluir_post(post_id):
         database.session.delete(post)
         database.session.commit()
         flash('Post excluído com sucesso', 'alert-danger')
-        return redirect(url_for('post'))
+        return redirect(url_for('home'))
     else:
         abort(403)

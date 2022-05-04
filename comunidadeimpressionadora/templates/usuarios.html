@@ -25,7 +25,9 @@
         <div class="row justify-content-center">
             <div class="col col-4" style="text-align: center">
                 <strong>Cursos</strong><br>
-                {% if usuario.cursos %}
+                {% if 'Não Informado' in usuario.cursos or usuario.cursos == '' %}
+                    <button type="button" class="btn btn-success mt-2" disabled>Não Informado</button>
+                {% elif usuario.cursos %}
                     {% for curso in usuario.cursos.split(';') %}
                         <button type="button" class="btn btn-success mt-2" disabled>{{ curso }}</button>
                     {% endfor %}
