@@ -8,8 +8,8 @@
         {% for post in posts %}
             <div class="row border mt-4 p-3 cssposts">
                 <div class="col col-2">
-                    <div class="image pe-2"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> </div><br>
-                    <strong>{{ post.autor.username }}</strong><br>
+                    <div class="row image"> <img src="{{ url_for('static', filename='fotos_perfil/{}'.format(post.autor.foto_perfil)) }}" class="rounded" width="200"> </div><br>
+                        <div class="row"><strong style="text-align: center">{{ post.autor.username }}</strong><br></div>
                     <div class="row">
                         {% if 'Não Informado' in post.autor.cursos or post.autor.cursos == '' %}
                             <button type="button" class="btn btn-success mt-2" disabled>Nenhum Curso Informado</button>

@@ -1,4 +1,4 @@
-from comunidadeimpressionadora import database, login_manager
+from blog import database, login_manager
 from datetime import datetime
 from flask_login import UserMixin
 
